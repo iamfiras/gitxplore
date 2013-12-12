@@ -1,4 +1,4 @@
-name := "zengularity"
+name := "gitxplore"
 
 version := "1.0-SNAPSHOT"
 

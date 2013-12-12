@@ -1,7 +1,7 @@
-@(message: String)
+@(title: String = "GitXplore")
 
-@main("Welcome to Play") {
+@content = {}
 
-    @play20.welcome(message)
+@jquery = {}
 
-}
+@main(title)(content, jquery)
