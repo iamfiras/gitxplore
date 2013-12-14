@@ -9,7 +9,7 @@ import play.api.libs.functional.syntax._
 
 import play.api.libs.ws._
 
-case class Repository(fullname: String, url: String, stars: Int)
+case class Repository(fullname: String, stars: Int)
 
 object Repository {
   
@@ -17,13 +17,12 @@ object Repository {
     (__ \ "items").read(
       seq(
         (__ \ "full_name").read[String] and
-        (__ \ "html_url").read[String] and
         (__ \ "stargazers_count").read[Int]
         tupled
       )
     ).map(
       _.collect {
-        case (fullname, url, stars) => Repository(fullname, url, stars)
+        case (fullname, stars) => Repository(fullname, stars)
       }
     )
   }
