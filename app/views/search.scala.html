@@ -1,11 +1,11 @@
-@(title: String = "GitXplore", reponame: String = "", repolist: List[(String, String, Int)] = Nil)
+@(title: String = "GitXplore")
 
 @content = {
   <div id="title">git<span>[x]</span>plore</div>
   <form id="repoForm" class="ink-form top-space">
     <div class="control-group">
       <div id="query-wrap" class="control append-symbol">
-        <span><input id="query" type="text" placeholder="Repository Name" @if(!reponame.isEmpty) { value="@reponame" }><i class="icon-large icon-github"></i></span>
+        <span><input id="query" type="text" placeholder="Repository Name"><i class="icon-large icon-github"></i></span>
       </div>
     </div>
   </form>

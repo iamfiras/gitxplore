@@ -1,13 +1,5 @@
-FormModel = Backbone.View.extend({
-  el: "#repoForm",
-  events: {
-    "submit": "submit"
-  },
-  submit: function(e) {
-    e.preventDefault();
-    this.model.update($("#query").val());
-  }
-});
+var App = window.App = {};
+
 
 RepoModel = Backbone.Model.extend({
   defaults: {
@@ -48,6 +40,21 @@ RepoList = Backbone.Collection.extend({
   }
 });
 
+FormModel = Backbone.View.extend({
+  el: "#repoForm",
+  events: {
+    "submit": "submit"
+  },
+  load: function(query) {
+    $("#query").val(query);
+    this.model.update(query);
+  },
+  submit: function(e) {
+    e.preventDefault();
+    App.router.navigateTo($("#query").val());
+  }
+});
+
 TableView = Backbone.View.extend({
   el: "#repolist tbody",
   template: _.template($("#repoTemplate").html()),
@@ -64,7 +71,24 @@ TableView = Backbone.View.extend({
   }
 });
 
+var WorkspaceRouter = Backbone.Router.extend({
+  routes: {
+    "search/:query": "search"
+  },
+  initialize: function() {
+    Backbone.history.start({pushState: true});
+  },
+  search: function(query) {
+    App.formView.load(query);
+  },
+  navigateTo: function(query) {
+    this.navigate("search/"+query);
+    this.search(query);
+  }
+});
 
-var repoList = new RepoList();
-var table = new TableView({model: repoList});
-var form = new FormModel({model: repoList});
+// Move to 'jQuery' section
+App.repoList = new RepoList();
+App.tableView = new TableView({model: App.repoList});
+App.formView = new FormModel({model: App.repoList});
+App.router = new WorkspaceRouter();

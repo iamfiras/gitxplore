@@ -15,16 +15,9 @@ object Application extends Controller {
     Ok(views.html.search())
   }
   
-  implicit val repositoryAsJson = Json.writes[Repository]
+  def search(query: String) = index
   
-  def search(q: Option[String]) = Action.async {
-    q match {
-      case Some(query) => Repository.search(query).map {
-        case r => Ok(Json.toJson(r))
-      }
-      case None => scala.concurrent.Future { Ok("") }
-    }
-  }
+  implicit val repositoryAsJson = Json.writes[Repository]
   
   def searchjson(q: Option[String]) = Action.async {
     q match {
