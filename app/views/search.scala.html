@@ -26,6 +26,10 @@
   </script>
 }
 
+@scriptsimport = {
+  <script src="@routes.Assets.at("javascripts/search.gitxplore.backbone.js")" type="text/javascript"></script>
+}
+
 @jquery = {}
 
-@main(title)(content, jquery)
+@main(title)(content, scriptsimport, jquery)

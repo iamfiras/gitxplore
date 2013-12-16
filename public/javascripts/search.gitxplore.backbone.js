@@ -40,7 +40,7 @@ RepoList = Backbone.Collection.extend({
   }
 });
 
-FormModel = Backbone.View.extend({
+FormView = Backbone.View.extend({
   el: "#repoForm",
   events: {
     "submit": "submit"
@@ -90,5 +90,5 @@ var WorkspaceRouter = Backbone.Router.extend({
 // Move to 'jQuery' section
 App.repoList = new RepoList();
 App.tableView = new TableView({model: App.repoList});
-App.formView = new FormModel({model: App.repoList});
+App.formView = new FormView({model: App.repoList});
 App.router = new WorkspaceRouter();

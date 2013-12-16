@@ -17,6 +17,10 @@ object Application extends Controller {
   
   def search(query: String) = index
   
+  def repo(author: String, reponame: String) = Action {
+    Ok(views.html.repository())
+  }
+  
   implicit val repositoryAsJson = Json.writes[Repository]
   implicit val commitAsJson = Json.writes[Commit]
   implicit val contributorAsJson = Json.writes[Contributor]
