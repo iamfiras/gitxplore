@@ -23,7 +23,8 @@ RepoModel = Backbone.Model.extend({
       this.repoHistory = {};
       var that = this;
       _.each(this.contributors, function(contributor) {
-        that.repoHistory[contributor.login] = _.filter(that.commits, function(commit) { return commit.commiter == contributor.login; });
+         var contribCommits = _.filter(that.commits, function(commit) { return commit.commiter == contributor.login; });
+         that.repoHistory[contributor.login + " (" + (contribCommits.length * 100 / that.commits.length).toFixed(2)  + "% - " + contribCommits.length + " commits / " + that.commits.length + ")"] = contribCommits
       });
       App.tableView.setModel(this);
     }
