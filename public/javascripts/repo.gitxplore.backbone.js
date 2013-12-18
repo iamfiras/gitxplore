@@ -26,7 +26,7 @@ RepoModel = Backbone.Model.extend({
          var contribCommits = _.filter(that.commits, function(commit) { return commit.committer == contributor.login; });
          that.repoHistory[contributor.login + " (" + (contribCommits.length * 100 / that.commits.length).toFixed(2)  + "% - " + contribCommits.length + " commits / " + that.commits.length + ")"] = contribCommits
       });
-      App.tableView.setModel(this);
+      App.mainView.updateModel(this);
     }
   }
 });
@@ -85,10 +85,14 @@ MainView = Backbone.View.extend({
   load: function(repofullname) {
     this.$el.html(repofullname);
     App.repoModel.update(repofullname);
+  },
+  updateModel: function(model) {
+    App.listView.setModel(model);
+    App.timelineView.setModel(model);
   }
 });
 
-TableView = Backbone.View.extend({
+ListView = Backbone.View.extend({
   el: "#historyList",
   template: _.template($("#historyTemplate").html()),
   initialize: function() {
@@ -96,6 +100,21 @@ TableView = Backbone.View.extend({
   },
   render: function() {
     this.$el.html(this.template({repoHistory: this.model.repoHistory}));
+    return this;
+  },
+  setModel: function(model) {
+    this.model = model;
+    this.render();
+  }
+});
+
+TimelineView = Backbone.View.extend({
+  el: "#timeline",
+  render: function() {
+    var events = _.map(this.model.commits, function(commit) {
+      return {dates: [new Date(Date.parse(commit.date))], title: commit.committer + ": " + commit.message};
+    });
+    App.timeline = new Chronoline(document.getElementById("timeline"), events, {animated: true, sections: []});
     return this;
   },
   setModel: function(model) {
@@ -121,5 +140,8 @@ App.repoModel = new RepoModel()
 App.commitList = new CommitList();
 App.contributorList = new ContributorList();
 App.mainView = new MainView();
-App.tableView = new TableView({model: App.repoModel});
+App.listView = new ListView({model: App.repoModel});
+App.timelineView = new TimelineView();
 App.router = new WorkspaceRouter();
+
+App.timeline = null;

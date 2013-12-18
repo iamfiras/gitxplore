@@ -2,9 +2,14 @@
 
 @content = {
   <div id="title">git<span>[x]</span>plore</div>
-  <div id="repoinfos">
-    <h5 id="reponame"></h5>
-    <ul class="ink-tree-view" id="historyList"></ul>
+  <h5 id="reponame"></h5>
+  <div id="repoinfos" class="ink-tabs top">
+    <ul class="tabs-nav">
+      <li><a href="#contributionsTab">Contributions</a></li>
+      <li><a href="#timelineTab">Timeline</a></li>
+    </ul>
+    <div id="contributionsTab" class="tabs-content"><ul class="ink-tree-view" id="historyList"></ul></div>
+    <div id="timelineTab" class="tabs-content"><div id="timeline"></div></div>
   </div>
   
   <script type="text/template" id="historyTemplate">
@@ -23,11 +28,19 @@
 }
 
 @scriptsimport = {
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.0.1/jquery.qtip.min.css" type="text/css" rel="stylesheet">
+  <link href="http://stoicloofah.github.io/chronoline.js/chronoline/chronoline.css" type="text/css" rel="stylesheet">
+  
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.0.1/jquery.qtip.min.js" type="text/javascript"></script>
+  <script src="http://stoicloofah.github.io/chronoline.js/chronoline/raphael-min.js" type="text/javascript"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js" type="text/javascript"></script>
+  <script src="http://stoicloofah.github.io/chronoline.js/chronoline/chronoline.js" type="text/javascript"></script>
   <script src="@routes.Assets.at("javascripts/repo.gitxplore.backbone.js")" type="text/javascript"></script>
 }
 
 @jquery = {
+  var tabs = new Ink.UI.Tabs( '.ink-tabs', { active: '#timelineTab' });
+  
   Ink.requireModules( ['Ink.UI.TreeView_1'], function(TreeView){
     new TreeView( '.ink-tree-view' );
   });

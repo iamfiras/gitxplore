@@ -9,7 +9,7 @@
       </div>
     </div>
   </form>
-  <table id="repolist" class="ink-table hover"><tbody></tbody></table>
+  <table id="repolist" class="ink-table"><tbody></tbody></table>
   <div id="msg">
     <div id="empty">Sorry, no github repository with this name was found. Try another one.<br/><i class="icon-github-alt"></i></div>
     <div id="fail">Ouch.. We might have a small technical issue here.. Do you mind if you try in a few seconds? We're working on a fix for this.<br/><i class="icon-frown"></i></div>
@@ -19,7 +19,7 @@
   <script type="text/template" id="repoTemplate">
     <% _.each(repos, function(repo) { %>
       <tr>
-        <td><%= repo.get("fullname") %></td>
+        <td><a href="/repo/<%= repo.get("fullname") %>"><%= repo.get("fullname") %></a></td>
         <td class="content-right"><%= repo.get("stars") %> <i class="icon-star"></i></td>
       </tr>
     <% }); %>
