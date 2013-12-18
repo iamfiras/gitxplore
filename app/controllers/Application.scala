@@ -35,16 +35,13 @@ object Application extends Controller {
   }
   
   def commitsjson(repofullname: Option[String], limit: Option[Int]) = Action.async {
-    val max = limit match {
-      case Some(l) => l
-      case None => 100
-    }
+    val max = limit.getOrElse(100)
     
     repofullname match {
-      case Some(name) => Commit.get(name).map {
-        case r => Ok(Json.toJson(r take max))
+      case Some(name) => Commit.get(name, max).map {
+        case r => Ok(Json.toJson(r))
       }
-      case None => scala.concurrent.Future { Ok("") }
+      case None => scala.concurrent.Future { BadRequest("") }
     }
   }
   
@@ -53,7 +50,7 @@ object Application extends Controller {
       case Some(name) => Contributor.get(name).map {
         case r => Ok(Json.toJson(r))
       }
-      case None => scala.concurrent.Future { Ok("") }
+      case None => scala.concurrent.Future { BadRequest("") }
     }
   }
 }

@@ -9,7 +9,7 @@ GET     /search/                    controllers.Application.search(query = "")
 GET     /search/:query              controllers.Application.search(query)
 GET     /search.json                controllers.Application.searchjson(q: Option[String] ?= None)
 
-GET     /commits.json               controllers.Application.commitsjson(repofullname: Option[String] ?= None, limit: Option[Int] ?= None)
+GET     /commits.json               controllers.Application.commitsjson(repofullname: Option[String] ?= None, limit: Option[Int] ?= Some(100))
 
 GET     /contributors.json          controllers.Application.contributorsjson(repofullname: Option[String] ?= None)
 

@@ -3,35 +3,18 @@
 @content = {
   <div id="title">git<span>[x]</span>plore</div>
   <div id="repoinfos">
-    <div id="reponame"></div>
+    <h5 id="reponame"></h5>
     <ul class="ink-tree-view" id="historyList"></ul>
   </div>
   
-  <script type="text/template" id="commitTemplate">
-    <% _.each(commits, function(commit) { %>
-      <tr>
-        <td><%= commit.get("sha") %></td>
-        <td class="content-right"><%= commit.get("commiter") %></td>
-      </tr>
-    <% }); %>
-  </script>
-  
-  <script type="text/template" id="contributorTemplate">
-    <% _.each(contributors, function(contributor) { %>
-      <tr>
-        <td><%= contributor.get("login") %></td>
-      </tr>
-    <% }); %>
-  </script>
-  
   <script type="text/template" id="historyTemplate">
     <% for (var contributor in repoHistory) { %>
-      <li><span></span><a href="#"><%= contributor %></a>
+      <li><span class="open"></span><a href="#"><%= contributor %></a>
       <ul>
     <%
       var commits = repoHistory[contributor];
       _.each(commits, function(commit) { %>
-          <li><%= commit["sha"] %></li>
+          <li><p class="date"><%= commit["date"] %></p> <a href="<%= commit["url"] %>" target="_blank"><%= commit["message"] %></a></li>
       <% }); %>
       </li></ul>
     <% } %>
@@ -40,6 +23,7 @@
 }
 
 @scriptsimport = {
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js" type="text/javascript"></script>
   <script src="@routes.Assets.at("javascripts/repo.gitxplore.backbone.js")" type="text/javascript"></script>
 }
 

@@ -23,7 +23,7 @@ RepoModel = Backbone.Model.extend({
       this.repoHistory = {};
       var that = this;
       _.each(this.contributors, function(contributor) {
-         var contribCommits = _.filter(that.commits, function(commit) { return commit.commiter == contributor.login; });
+         var contribCommits = _.filter(that.commits, function(commit) { return commit.committer == contributor.login; });
          that.repoHistory[contributor.login + " (" + (contribCommits.length * 100 / that.commits.length).toFixed(2)  + "% - " + contribCommits.length + " commits / " + that.commits.length + ")"] = contribCommits
       });
       App.tableView.setModel(this);
@@ -33,10 +33,11 @@ RepoModel = Backbone.Model.extend({
 
 CommitModel = Backbone.Model.extend({
   defaults: {
+    message: "",
     sha: "",
     url: "",
     date: "",
-    commiter: ""
+    committer: ""
   }
 });
 
@@ -51,6 +52,9 @@ CommitList = Backbone.Collection.extend({
     this.on("sync", this.onSync);
   },
   onSync: function() {
+    _.each(this.models, function(commitModel) {
+      commitModel.attributes.date = $.datepicker.formatDate('yy-mm-dd', new Date(Date.parse(commitModel.attributes.date)));
+    });
     App.repoModel.finishCommits(_.map(this.models, function(m) { return m.attributes; }));
   }
 });
