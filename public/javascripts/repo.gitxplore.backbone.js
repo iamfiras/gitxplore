@@ -12,20 +12,26 @@ RepoModel = Backbone.Model.extend({
   },
   finishCommits: function(commits) {
     this.commits = commits;
-    this.load();
+    this.show();
   },
   finishContributors: function(contributors) {
     this.contributors = contributors;
-    this.load();
+    this.show();
   },
-  load: function() {
-    if (this.commits != {} && this.contributors != {}) {
-      this.repoHistory = {};
+  show: function() {
+    if (!$.isEmptyObject(this.commits) && !$.isEmptyObject(this.contributors)) {
       var that = this;
+      var tree = Array();
       _.each(this.contributors, function(contributor) {
          var contribCommits = _.filter(that.commits, function(commit) { return commit.committer == contributor.login; });
-         that.repoHistory[contributor.login + " (" + (contribCommits.length * 100 / that.commits.length).toFixed(2)  + "% - " + contribCommits.length + " commits / " + that.commits.length + ")"] = contribCommits
+         var innerArray = Array();
+         innerArray.push(contributor.login + " (" + (contribCommits.length * 100 / that.commits.length).toFixed(2)  + "% - " + contribCommits.length + " commits)");
+         innerArray.push(contribCommits);
+         tree.push(innerArray);
       });
+
+      this.repoHistory = _.sortBy(tree, function(arr) { return 1 / arr[1].length; });
+
       App.mainView.updateModel(this);
     }
   }

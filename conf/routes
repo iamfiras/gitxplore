@@ -5,8 +5,7 @@
 # Home page
 GET     /                           controllers.Application.index()
 
-GET     /search/                    controllers.Application.search(query = "")
-GET     /search/:query              controllers.Application.search(query)
+GET     /search                     controllers.Application.search(q: Option[String] ?= None)
 GET     /search.json                controllers.Application.searchjson(q: Option[String] ?= None)
 
 GET     /commits.json               controllers.Application.commitsjson(repofullname: Option[String] ?= None, limit: Option[Int] ?= Some(100))

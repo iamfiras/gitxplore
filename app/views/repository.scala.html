@@ -13,17 +13,14 @@
   </div>
   
   <script type="text/template" id="historyTemplate">
-    <% for (var contributor in repoHistory) { %>
-      <li><span class="open"></span><a href="#"><%= contributor %></a>
+    <% _.each(repoHistory, function(array) { %>
+      <li><span class="open"></span><a href="#"><%= array[0] %></a>
       <ul>
-    <%
-      var commits = repoHistory[contributor];
-      _.each(commits, function(commit) { %>
+      <% _.each(array[1], function(commit) { %>
           <li><p class="date"><%= commit["date"] %></p> <a href="<%= commit["url"] %>" target="_blank"><%= commit["message"] %></a></li>
       <% }); %>
       </li></ul>
-    <% } %>
-    </ul>
+    <% }); %>
   </script>
 }
 

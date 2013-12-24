@@ -73,16 +73,16 @@ TableView = Backbone.View.extend({
 
 var WorkspaceRouter = Backbone.Router.extend({
   routes: {
-    "search/:query": "search"
+    "search": "search"
   },
   initialize: function() {
     Backbone.history.start({pushState: true});
   },
-  search: function(query) {
-    App.formView.load(query);
+  search: function(params) {
+    App.formView.load(params.q);
   },
   navigateTo: function(query) {
-    this.navigate("search/"+query);
+    this.navigate("search?q="+query);
     this.search(query);
   }
 });
