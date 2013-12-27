@@ -29,6 +29,11 @@
   <script src="@routes.Assets.at("javascripts/search.gitxplore.backbone.js")" type="text/javascript"></script>
 }
 
-@jquery = {}
+@jquery = {
+  App.repoList = new RepoList();
+  App.tableView = new TableView({model: App.repoList});
+  App.formView = new FormView({model: App.repoList});
+  App.router = new WorkspaceRouter();
+}
 
 @main(title)(content, scriptsimport, jquery)

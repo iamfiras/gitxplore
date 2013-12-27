@@ -35,6 +35,16 @@
 }
 
 @jquery = {
+  App.repoModel = new RepoModel()
+  App.commitList = new CommitList();
+  App.contributorList = new ContributorList();
+  App.mainView = new MainView();
+  App.listView = new ListView({model: App.repoModel});
+  App.timelineView = new TimelineView();
+  App.router = new WorkspaceRouter();
+
+  App.timeline = null;
+  
   var tabs = new Ink.UI.Tabs( '.ink-tabs', { active: '#timelineTab' });
   
   Ink.requireModules( ['Ink.UI.TreeView_1'], function(TreeView){

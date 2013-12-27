@@ -86,9 +86,3 @@ var WorkspaceRouter = Backbone.Router.extend({
     this.search(query);
   }
 });
-
-// Move to 'jQuery' section
-App.repoList = new RepoList();
-App.tableView = new TableView({model: App.repoList});
-App.formView = new FormView({model: App.repoList});
-App.router = new WorkspaceRouter();

@@ -140,14 +140,3 @@ var WorkspaceRouter = Backbone.Router.extend({
     App.mainView.load(author + "/" + reponame);
   }
 });
-
-// Move to 'jQuery' section
-App.repoModel = new RepoModel()
-App.commitList = new CommitList();
-App.contributorList = new ContributorList();
-App.mainView = new MainView();
-App.listView = new ListView({model: App.repoModel});
-App.timelineView = new TimelineView();
-App.router = new WorkspaceRouter();
-
-App.timeline = null;
