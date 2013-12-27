@@ -15,12 +15,7 @@ object Application extends Controller {
     Ok(views.html.search())
   }
   
-  def search(q: Option[String]) = Action {
-    q match {
-      case Some(query) => Ok(views.html.search())
-      case None => BadRequest("Bad Request: query is not optionnal.\nUrl format should be http://domain/search?q=[query] where [query] is the repo name you want to search.")
-    }
-  }
+  def search(q: String) = index
   
   def repo(author: String, reponame: String) = Action {
     Ok(views.html.repository())
