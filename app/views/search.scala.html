@@ -1,4 +1,4 @@
-@(title: String = "GitXplore")
+@(title: String = "Search | GitXplore")
 
 @content = {
   <form id="repoForm" class="ink-form top-space">
@@ -8,32 +8,11 @@
       </div>
     </div>
   </form>
-  <table id="repolist" class="ink-table"><tbody></tbody></table>
-  <div id="msg">
-    <div id="empty">Sorry, no github repository with this name was found. Try another one.<br/><i class="icon-github-alt"></i></div>
-    <div id="fail">Ouch.. We might have a technical issue here.. Do you mind if you try in a few seconds? We're working on a fix for this.<br/><i class="icon-frown"></i></div>
-    <div id="loading">Searching.. Don't worry, we're faster than Youtube.<br/><img src="@routes.Assets.at("images/loading.gif")"/></div>
-  </div>
-  
-  <script type="text/template" id="repoTemplate">
-    <% _.each(repos, function(repo) { %>
-      <tr>
-        <td><a href="/repo/<%= repo.get("fullname") %>"><%= repo.get("fullname") %></a></td>
-        <td class="content-right"><%= repo.get("stars") %> <i class="icon-star"></i></td>
-      </tr>
-    <% }); %>
-  </script>
+  <div id="results"></div>
 }
 
 @scriptsimport = {
-  <script src="@routes.Assets.at("javascripts/search.gitxplore.backbone.js")" type="text/javascript"></script>
+  <script src="@routes.Assets.at("javascripts/search.gitxplore.js")" type="text/javascript"></script>
 }
 
-@jquery = {
-  App.repoList = new RepoList();
-  App.tableView = new TableView({model: App.repoList});
-  App.formView = new FormView({model: App.repoList});
-  App.router = new WorkspaceRouter();
-}
-
-@main(title)(content, scriptsimport, jquery)
+@main(title)(content, scriptsimport)

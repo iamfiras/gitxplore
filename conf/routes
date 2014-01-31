@@ -5,6 +5,8 @@
 # Home page
 GET     /                           controllers.Application.index()
 
+GET     /results                    controllers.Search.results(q: Option[String] ?= None)
+
 GET     /search/:query              controllers.Application.search(query)
 GET     /search.json                controllers.Application.searchjson(q: Option[String] ?= None)
 

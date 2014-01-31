@@ -1,0 +1,4 @@
+@(repositories: Seq[utils.Repository])
+@for(repository <- repositories) {
+  <div>@repository.fullname - @repository.stars</div>
+}

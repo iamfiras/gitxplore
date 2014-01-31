@@ -12,7 +12,7 @@ import play.api.libs.ws._
 case class Repository(fullname: String, stars: Int)
 
 object Repository {
-  
+
   implicit def parseRepository: Reads[Seq[Repository]] = {
     (__ \ "items").read(
       seq(
@@ -26,7 +26,7 @@ object Repository {
       }
     )
   }
-  
+
   def search(query: String): Future[Seq[Repository]] =
     WS.url(s"https://api.github.com/search/repositories?q=$query")
     .get().map(
