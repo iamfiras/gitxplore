@@ -1,4 +1,9 @@
 @(repositories: Seq[utils.Repository])
+<table id="repolist" class="ink-table"><tbody>
 @for(repository <- repositories) {
-  <div>@repository.fullname - @repository.stars</div>
+  <tr>
+    <td><a href="/repo/@repository.fullname">@repository.fullname</a></td>
+    <td class="content-right">@repository.stars <i class="icon-star"></i></td>
+  </tr>
 }
+</tbody></table>

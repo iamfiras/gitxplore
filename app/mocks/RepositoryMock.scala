@@ -17,4 +17,8 @@ object RepositoryMock {
       )
     }
   }
+  
+  def empty(query: String): Future[Seq[Repository]] = {
+    scala.concurrent.Future { Nil }
+  }
 }
