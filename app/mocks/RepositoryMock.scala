@@ -3,7 +3,7 @@ package mocks
 import scala.concurrent._
 import ExecutionContext.Implicits.global
 
-import utils.Repository
+import models.Repository
 
 object RepositoryMock {
   

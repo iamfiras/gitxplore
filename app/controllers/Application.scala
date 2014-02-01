@@ -8,6 +8,7 @@ import scala.concurrent._
 import ExecutionContext.Implicits.global
 
 import utils._
+import models._
 
 object Application extends Controller {
 
