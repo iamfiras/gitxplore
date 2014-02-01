@@ -2,7 +2,6 @@ package controllers
 
 import play.api._
 import play.api.mvc._
-import play.api.libs.json._
 import scala.concurrent._
 import ExecutionContext.Implicits.global
 
@@ -14,8 +13,6 @@ object Search extends Controller {
   def index = Action {
     Ok(views.html.search())
   }
-
-  implicit val repositoryAsJson = Json.writes[Repository]
 
   def results(q: Option[String]) = Action.async {
     q match {
