@@ -20,8 +20,8 @@ object Search extends Controller {
   def results(q: Option[String]) = Action.async {
     q match {
       case Some(query) if (query.trim.length > 0) =>
-        RepositoryMock.empty(query).map {
-          case r => if (r.length > 0) Ok(views.html.results(r)) else Ok(views.html.messages.githubmsg(Messages.REPO_NOT_FOUND))
+        RepositoryMock.search(query).map {
+          case r => if (r.length > 0) Ok(views.html.results(r)) else Ok(views.html.messages.github(Messages.REPO_NOT_FOUND))
         }
       case _ => scala.concurrent.Future { Ok(views.html.messages.error(Messages.EMPTY_QUERY)) }
     }
