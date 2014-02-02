@@ -15,10 +15,9 @@ object Details extends Controller {
   def index(repo: String, name: String) = Action.async { request =>
     val reponame = repo + "/" + name
     for {
-      collaborators <- Collaborator.get(reponame)
       commits <- Commit.get(reponame, 100)
       
-      historySimpleResult <- getHistoryList(collaborators, commits)(request)
+      historySimpleResult <- getHistoryList(commits)(request)
       timelineSimpleResult <- getTimeline(commits)(request)
       
       historyHtml <- PageHelper.getHtmlFrom(historySimpleResult)
@@ -32,10 +31,12 @@ object Details extends Controller {
     Ok(views.html.details.timeline(commits))
   }
 
-  def getHistoryList(collaborators: Seq[Collaborator], commits: Seq[Commit]) = Action {
-    val historyList = collaborators map { collaborator =>
-      (collaborator, commits.filter(_.committer == collaborator.login))
+  def getHistoryList(commits: Seq[Commit]) = Action {
+    val label = "%s (%2.2f%%, %d commits)"
+    val grouped = commits groupBy { commit => commit.committer }
+    val history = grouped map { commitList =>
+      (label.format(commitList._1, (commitList._2.length.toDouble / commits.length.toDouble) * 100, commitList._2.length), commitList._2)
     }
-    Ok(views.html.details.historyList(historyList))
+    Ok(views.html.details.historyList(history.toList.sortBy(- _._2.length)))
   }
 }
