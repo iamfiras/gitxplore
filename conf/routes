@@ -3,21 +3,11 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index()
-
+GET     /                           controllers.Search.index
 GET     /results                    controllers.Search.results(q: Option[String] ?= None)
 GET     /search                     controllers.Search.search(q: Option[String] ?= None)
 
-GET     /details/:repo/:name          controllers.Details.get(repo, name)
-
-GET     /search/:query              controllers.Application.search(query)
-GET     /search.json                controllers.Application.searchjson(q: Option[String] ?= None)
-
-GET     /commits.json               controllers.Application.commitsjson(repofullname: Option[String] ?= None, limit: Option[Int] ?= Some(100))
-
-GET     /contributors.json          controllers.Application.contributorsjson(repofullname: Option[String] ?= None)
-
-GET     /repo/:author/:reponame     controllers.Application.repo(author, reponame)
+GET     /details/:repo/:name        controllers.Details.index(repo, name)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

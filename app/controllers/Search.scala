@@ -12,7 +12,7 @@ import utils.{Messages, PageHelper}
 object Search extends Controller {
 
   def index = Action {
-    Ok(views.html.search())
+    Ok(views.html.search.index())
   }
 
   def search(q: Option[String]) = Action.async { request =>
@@ -21,7 +21,7 @@ object Search extends Controller {
       resultsSimpleResult <- resultsFuture
       resultsHtml <- PageHelper.getHtmlFrom(resultsSimpleResult)
     } yield {
-      Ok(views.html.search(q.getOrElse(""), resultsHtml))
+      Ok(views.html.search.index(q.getOrElse(""), resultsHtml))
     }
   }
 
@@ -29,7 +29,7 @@ object Search extends Controller {
     val query = q.getOrElse("").trim
     if (query.length > 0) {
       Repository.search(query).map {
-        case r => if (r.length > 0) Ok(views.html.results(r)) else Ok(views.html.messages.github(Messages.REPO_NOT_FOUND))
+        case r => if (r.length > 0) Ok(views.html.search.results(r)) else Ok(views.html.messages.github(Messages.REPO_NOT_FOUND))
       }
     } else {
       Future { Ok(views.html.messages.error(Messages.EMPTY_QUERY)) }

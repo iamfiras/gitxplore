@@ -12,7 +12,7 @@ import utils.PageHelper
 
 object Details extends Controller {
 
-  def get(repo: String, name: String) = Action.async { request =>
+  def index(repo: String, name: String) = Action.async { request =>
     val reponame = repo + "/" + name
     for {
       collaborators <- Collaborator.get(reponame)
@@ -24,7 +24,7 @@ object Details extends Controller {
       historyHtml <- PageHelper.getHtmlFrom(historySimpleResult)
       timelineHtml <- PageHelper.getHtmlFrom(timelineSimpleResult)
     } yield {
-      Ok(views.html.details.repository(historyHtml, timelineHtml))
+      Ok(views.html.details.index(historyHtml, timelineHtml))
     }
   }
 
