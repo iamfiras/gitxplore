@@ -6,7 +6,7 @@ import ExecutionContext.Implicits.global
 import models.Repository
 
 object RepositoryMock {
-  
+
   def search(query: String): Future[Seq[Repository]] = {
     scala.concurrent.Future {
       List(
@@ -17,7 +17,7 @@ object RepositoryMock {
       )
     }
   }
-  
+
   def empty(query: String): Future[Seq[Repository]] = {
     scala.concurrent.Future { Nil }
   }

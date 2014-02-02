@@ -15,7 +15,7 @@ case class Commit(var message: String, sha: String, url: String, date: String, c
 }
 
 object Commit {
-  
+
   implicit def parseCommit: Reads[Seq[Commit]] = {
     (__).read(
       seq(
@@ -32,7 +32,7 @@ object Commit {
       }
     )
   }
-  
+
   def get(fullname: String, limit: Int): Future[Seq[Commit]] = {
     WS.url(GithubAPI.commits.format(fullname, limit))
     .get().map(

@@ -23,7 +23,7 @@ object Details extends Controller {
       historyHtml <- PageHelper.getHtmlFrom(historySimpleResult)
       timelineHtml <- PageHelper.getHtmlFrom(timelineSimpleResult)
     } yield {
-      Ok(views.html.details.index(historyHtml, timelineHtml))
+      Ok(views.html.details.index(reponame, historyHtml, timelineHtml))
     }
   }
 

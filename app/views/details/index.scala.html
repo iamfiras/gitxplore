@@ -1,7 +1,7 @@
-@(history: Html = Html(""), timeline: Html = Html(""))
+@(reponame: String, history: Html = Html(""), timeline: Html = Html(""))
 
 @content = {
-  <h5 id="reponame"></h5>
+  <h5 id="reponame">@reponame</h5>
   <div id="repoinfos" class="ink-tabs top">
     <ul class="tabs-nav">
       <li><a href="#contributionsTab">Contributions</a></li>
