@@ -1,6 +1,6 @@
 # git[x]plore
 
-git[x]plore is a simple play2 application that operates on tht Github API to search and display details (contributions based on hte last 100 commits) of a public repository.
+git[x]plore is a simple play2 application that operates on the Github API to search and display details (contributions based on the last 100 commits) of a public repository.
 
 ## Screenshots
 
@@ -12,4 +12,4 @@ git[x]plore is a simple play2 application that operates on tht Github API to sea
 
 ![screenshot](https://raw.github.com/fbessadok/gitxplore/master/demo/details.timeline.gitxplore.png)
 
-The libraries Ink from sapo and Vis.js are used.
+The libraries [Ink from sapo](http://ink.sapo.pt/) and [Vis.js](http://visjs.org/) are used.
