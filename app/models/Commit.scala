@@ -10,7 +10,9 @@ import play.api.libs.functional.syntax._
 
 import utils.GithubAPI
 
-case class Commit(message: String, sha: String, url: String, date: String, committer: String)
+case class Commit(var message: String, sha: String, url: String, date: String, committer: String) {
+  message = message.filter(_ >= ' ') // Control characters (\n, \t etc.) are all lower than the space character. => we filter them
+}
 
 object Commit {
   

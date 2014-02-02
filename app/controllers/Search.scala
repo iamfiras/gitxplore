@@ -28,11 +28,11 @@ object Search extends Controller {
   def results(q: Option[String]) = Action.async {
     val query = q.getOrElse("").trim
     if (query.length > 0) {
-      RepositoryMock.search(query).map {
+      Repository.search(query).map {
         case r => if (r.length > 0) Ok(views.html.results(r)) else Ok(views.html.messages.github(Messages.REPO_NOT_FOUND))
       }
     } else {
-      scala.concurrent.Future { Ok(views.html.messages.error(Messages.EMPTY_QUERY)) }
+      Future { Ok(views.html.messages.error(Messages.EMPTY_QUERY)) }
     }
   }
 }

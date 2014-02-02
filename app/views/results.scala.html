@@ -2,7 +2,7 @@
 <table id="repolist" class="ink-table"><tbody>
 @for(repository <- repositories) {
   <tr>
-    <td><a href="/repo/@repository.fullname">@repository.fullname</a></td>
+    <td><a href="/details/@repository.fullname">@repository.fullname</a></td>
     <td class="content-right">@repository.stars <i class="icon-star"></i></td>
   </tr>
 }

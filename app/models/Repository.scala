@@ -8,6 +8,8 @@ import play.api.libs.json._
 import play.api.libs.json.Reads._
 import play.api.libs.functional.syntax._
 
+import utils.GithubAPI
+
 case class Repository(fullname: String, stars: Int)
 
 object Repository {
@@ -27,7 +29,7 @@ object Repository {
   }
 
   def search(query: String): Future[Seq[Repository]] =
-    WS.url(s"https://api.github.com/search/repositories?q=$query")
+    WS.url(GithubAPI.search.format(query))
     .get().map(
       r => r.status match {
         case 200 => r.json.asOpt[Seq[Repository]].getOrElse(Nil)

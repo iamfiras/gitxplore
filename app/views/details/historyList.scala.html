@@ -1,0 +1,12 @@
+@(historyList: Seq[(models.Collaborator, Seq[models.Commit])])
+<ul class="ink-tree-view" id="historyList">
+@for(historyLine <- historyList) {
+  <li><span class="open"></span><a href="#">@historyLine._1.login</a>
+    <ul>
+      @for(commit <- historyLine._2) {
+        <li><p class="date">@commit.date</p> <a href="@commit.url" target="_blank">@commit.message</a></li>
+      }
+    </ul>
+  </li>
+}
+</ul>

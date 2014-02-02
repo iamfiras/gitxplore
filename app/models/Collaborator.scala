@@ -10,28 +10,29 @@ import play.api.libs.functional.syntax._
 
 import utils.GithubAPI
 
-case class Contributor(login: String)
+case class Collaborator(login: String)
 
-object Contributor {
+object Collaborator {
   
-  implicit def parseContributor: Reads[Seq[Contributor]] = {
+  implicit def parseCollaborators: Reads[Seq[Collaborator]] = {
     (__).read(
       seq(
         (__ \ "login").read[String]
       )
     ).map(
       _.collect {
-        case login => Contributor(login)
+        case login => Collaborator(login)
       }
     )
   }
   
-  def get(fullname: String): Future[Seq[Contributor]] =
-    WS.url(GithubAPI.contributors.format(fullname))
+  def get(fullname: String): Future[Seq[Collaborator]] = {
+    WS.url(GithubAPI.collaborators.format(fullname))
     .get().map(
       r => r.status match {
-        case 200 => r.json.asOpt[Seq[Contributor]].getOrElse(Nil)
+        case 200 => r.json.asOpt[Seq[Collaborator]].getOrElse(Nil)
         case e => sys.error(s"Bad response. Status $e")
       }
     )
+  }
 }

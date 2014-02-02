@@ -1,0 +1,11 @@
+@(commits: Seq[models.Commit])
+<script type="text/javascript">
+  var container = document.getElementById("timeline");
+  var items = [
+  @for((commit, index) <- commits.zipWithIndex) {
+    {id: @index, content: '@commit.committer: @commit.message', start: '@commit.date'},
+  }
+  ];
+  var options = {};
+  var timeline = new vis.Timeline(container, items, options);
+</script>
