@@ -29,10 +29,10 @@ object Search extends Controller {
     if (query.length > 0) {
       Repository.search(query).map {
         case r if (r.length > 0) => Ok(views.html.search.results(r))
-        case _ => Ok(views.html.messages.github(Messages.REPO_NOT_FOUND))
+        case _ => NotFound(views.html.messages.github(Messages.REPO_NOT_FOUND))
       }
     } else {
-      Future { Ok(views.html.messages.error(Messages.EMPTY_QUERY)) }
+      Future { BadRequest(views.html.messages.error(Messages.EMPTY_QUERY)) }
     }
   }
 }

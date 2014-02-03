@@ -7,15 +7,17 @@ function submitSearch(e) {
 
 function querying(query) {
   toogle(false, true, false);
-  $.get("/results?q=" + query,
-    function(data) {
-      if (data.length > 0) {
-        $("#results").html(data);
-        toogle(true, false, false);
-      }
+  $.get("/results?q=" + query)
+  .always(function(data, xhr, meta) {
+    if (meta.status == 200) {
+      $("#results").html(data);
+      toogle(true, false, false);
+    } else if (data.status == 400 || data.status == 404) {
+      $("#results").html(data.responseText);
+      toogle(true, false, false);
+    } else {
+      toogle(false, false, true);
     }
-  ).fail(function() {
-    toogle(false, false, true);
   });
 }
 
