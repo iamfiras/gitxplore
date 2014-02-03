@@ -24,7 +24,17 @@ class ApplicationSpec extends Specification {
 
       status(home) must equalTo(OK)
       contentType(home) must beSome.which(_ == "text/html")
-      contentAsString(home) must contain ("Your new application is ready.")
+      contentAsString(home) must contain ("GitXplore")
+    }
+    
+    "empty request returns BadRequest" in new WithApplication {
+      val results = route(FakeRequest(GET, "/results?q=")).get
+      status(results) must equalTo(BAD_REQUEST)
+    }
+    
+    "non existing repo must return NotFound" in new WithApplication {
+      val results = route(FakeRequest(GET, "/results?q=ThisRepoDoesNotExistAndIfItDoesThereIsSomethingWrongWithSomeone")).get
+      status(results) must equalTo(NOT_FOUND)
     }
   }
 }
