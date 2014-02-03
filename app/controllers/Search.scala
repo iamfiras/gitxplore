@@ -16,9 +16,8 @@ object Search extends Controller {
   }
 
   def search(q: Option[String]) = Action.async { request =>
-    val resultsFuture = results(q)(request)
     for {
-      resultsSimpleResult <- resultsFuture
+      resultsSimpleResult <- results(q)(request)
       resultsHtml <- PageHelper.getHtmlFrom(resultsSimpleResult)
     } yield {
       Ok(views.html.search.index(q.getOrElse(""), resultsHtml))
@@ -29,7 +28,8 @@ object Search extends Controller {
     val query = q.getOrElse("").trim
     if (query.length > 0) {
       Repository.search(query).map {
-        case r => if (r.length > 0) Ok(views.html.search.results(r)) else Ok(views.html.messages.github(Messages.REPO_NOT_FOUND))
+        case r if (r.length > 0) => Ok(views.html.search.results(r))
+        case _ => Ok(views.html.messages.github(Messages.REPO_NOT_FOUND))
       }
     } else {
       Future { Ok(views.html.messages.error(Messages.EMPTY_QUERY)) }
