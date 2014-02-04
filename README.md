@@ -8,12 +8,12 @@ It's basically an implementation of Yevgeniy Brikman [@brikis98](https://twitter
 
 ## Screenshots
 
-To simulate a heavy calculation I just created a clone of the Details controller in app/mocks/DetailsMock.scala and delayed the response of the Contributions module by one second.
+To simulate a heavy calculation I just created a clone of the ```Details``` controller in ```app/mocks/DetailsMock.scala``` and delayed the response of the Contributions module by one second.
 
-Before: Waiting 1 second until the data is ready and starts streaming to the client, then the browser build the Dom, then it starts downloading requested files (css, js, fonts), and finally rendering the page.
+**Initial**: Waiting 1 second until the data is ready and starts streaming to the client, then the browser build the Dom, then it starts downloading requested files (css, js, fonts), and finally rendering the page.
 
 ![screenshot](https://raw.github.com/fbessadok/gitxplore/stream/demo/details.gitxplore.png)
 
-After: Receiving the head of the html page and some of the body in less than 200ms, it can now start building the (incomplete) DOM, downloading resources and even rendering the page before the Contributions module finishes its calculation. When it will finish it will send the builded html that will be inserted thanks to js script inside the right node in the DOM.
+**Optimised**: Receiving the head of the html page and some of the body in less than 200ms, it can now start building the (incomplete) DOM, downloading resources and even rendering the page before the Contributions module finishes its calculation. When it will finish it will send the builded html that will be inserted (thanks to a one-line js script) inside the right node in the DOM.
 
 ![screenshot](https://raw.github.com/fbessadok/gitxplore/stream/demo/stream.gitxplore.png)
