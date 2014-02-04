@@ -12,8 +12,8 @@ To simulate a heavy calculation I just created a clone of the Details controller
 
 Before: Waiting 1 second until the data is ready and starts streaming to the client, then the browser build the Dom, then it starts downloading requested files (css, js, fonts), and finally rendering the page.
 
-![screenshot](https://raw.github.com/fbessadok/gitxplore/master/demo/details.gitxplore.png)
+![screenshot](https://raw.github.com/fbessadok/gitxplore/stream/demo/details.gitxplore.png)
 
 After: Receiving the head of the html page and some of the body in less than 200ms, it can now start building the (incomplete) DOM, downloading resources and even rendering the page before the Contributions module finishes its calculation. When it will finish it will send the builded html that will be inserted thanks to js script inside the right node in the DOM.
 
-![screenshot](https://raw.github.com/fbessadok/gitxplore/master/demo/stream.gitxplore.png)
+![screenshot](https://raw.github.com/fbessadok/gitxplore/stream/demo/stream.gitxplore.png)
