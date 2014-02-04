@@ -20,8 +20,8 @@ object Details extends Controller {
       historySimpleResult <- getHistoryList(commits)(request)
       timelineSimpleResult <- getTimeline(commits)(request)
       
-      historyHtml <- PageHelper.getHtmlFrom(historySimpleResult)
-      timelineHtml <- PageHelper.getHtmlFrom(timelineSimpleResult)
+      historyHtml <- PageHelper.getHtml(historySimpleResult)
+      timelineHtml <- PageHelper.getHtml(timelineSimpleResult)
     } yield {
       Ok(views.html.details.index(reponame, historyHtml, timelineHtml))
     }

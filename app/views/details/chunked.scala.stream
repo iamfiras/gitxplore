@@ -1,0 +1,33 @@
+@(reponame: String, body: utils.HtmlStream)
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+  <title>Details</title>
+  <link rel="stylesheet" media="screen" href="@routes.Assets.at("libs/ink/css/ink-min.css")">
+  <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+  <script src="@routes.Assets.at("libs/jquery-1.9.1.min.js")"></script>
+</head>
+<body>
+  <div class="ink-grid">
+    <div class="large-70 push-center">
+      <div id="title"><a href="/">git<span>[x]</span>plore</a></div>
+	  <h5 id="reponame">@reponame</h5>
+	  <div id="repoinfos" class="ink-tabs top">
+		<ul class="tabs-nav">
+		  <li><a href="#contributionsTab">Contributions</a></li>
+		  <li><a href="#timelineTab">Timeline</a></li>
+		</ul>
+		<div id="contributionsTab" class="tabs-content"></div>
+		<div id="timelineTab" class="tabs-content"><div id="timeline"></div></div>
+	  </div>
+	  <script src="@routes.Assets.at("libs/vis/vis.min.js")" type="text/javascript"></script>
+	  <link href="@routes.Assets.at("libs/vis/vis.css")" rel="stylesheet" type="text/css" />
+	  <script type="text/javascript" id="timelineScript"></script>
+	  @body
+	</div>
+  </div>
+  <script src="@routes.Assets.at("libs/ink/js/ink-all.min.js")" type="text/javascript"></script>
+  <script src="@routes.Assets.at("javascripts/details.gitxplore.js")" type="text/javascript"></script>
+</body>
+</html>

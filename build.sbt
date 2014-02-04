@@ -2,10 +2,10 @@ name := "gitxplore"
 
 version := "1.0-SNAPSHOT"
 
-libraryDependencies ++= Seq(
-  jdbc,
-  anorm,
-  cache
-)     
-
 play.Project.playScalaSettings
+
+play.Keys.templatesTypes ++= Map("stream" -> "utils.HtmlStreamFormat")
+
+play.Keys.templatesImport ++= Vector("_root_.utils.HtmlStream", "_root_.utils.HtmlStream._")
+
+libraryDependencies ++= Seq()

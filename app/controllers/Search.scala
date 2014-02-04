@@ -18,7 +18,7 @@ object Search extends Controller {
   def search(q: Option[String]) = Action.async { request =>
     for {
       resultsSimpleResult <- results(q)(request)
-      resultsHtml <- PageHelper.getHtmlFrom(resultsSimpleResult)
+      resultsHtml <- PageHelper.getHtml(resultsSimpleResult)
     } yield {
       Ok(views.html.search.index(q.getOrElse(""), resultsHtml))
     }
