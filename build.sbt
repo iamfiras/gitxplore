@@ -9,3 +9,6 @@ libraryDependencies ++= Seq(
 )     
 
 play.Project.playScalaSettings
+
+// enable improved (experimental) incremental compilation algorithm called "name hashing"
+incOptions := incOptions.value.withNameHashing(true)
