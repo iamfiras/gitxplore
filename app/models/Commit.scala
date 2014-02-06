@@ -33,8 +33,8 @@ object Commit {
     )
   }
 
-  def get(fullname: String, limit: Int): Future[Seq[Commit]] = {
-    WS.url(GithubAPI.commits.format(fullname, limit))
+  def get(repofullname: String, limit: Int): Future[Seq[Commit]] = {
+    WS.url(GithubAPI.commits.format(repofullname, limit))
     .get().map(
       r => r.status match {
         case 200 => r.json.asOpt[Seq[Commit]].getOrElse(Nil)

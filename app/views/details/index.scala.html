@@ -1,12 +1,14 @@
-@(reponame: String, history: Html = Html(""), timeline: Html = Html(""))
+@(repofullname: String, readme: Html = Html(""), history: Html = Html(""), timeline: Html = Html(""))
 
 @content = {
-  <h5 id="reponame">@reponame</h5>
+  <h5 id="reponame">@repofullname</h5>
   <div id="repoinfos" class="ink-tabs top">
     <ul class="tabs-nav">
+      <li><a href="#readmeTab">Readme</a></li>
       <li><a href="#contributionsTab">Contributions</a></li>
       <li><a href="#timelineTab">Timeline</a></li>
     </ul>
+    <div id="readmeTab" class="tabs-content">@readme</div>
     <div id="contributionsTab" class="tabs-content">@history</div>
     <div id="timelineTab" class="tabs-content"><div id="timeline"></div></div>
   </div>

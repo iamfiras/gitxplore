@@ -10,6 +10,8 @@ Check the second branch [stream](https://github.com/fbessadok/gitxplore/tree/str
 
 ![screenshot](https://raw.github.com/fbessadok/gitxplore/master/demo/search.gitxplore.png)
 
+![screenshot](https://raw.github.com/fbessadok/gitxplore/master/demo/details.readme.gitxplore.png)
+
 ![screenshot](https://raw.github.com/fbessadok/gitxplore/master/demo/details.contributions.gitxplore.png)
 
 ![screenshot](https://raw.github.com/fbessadok/gitxplore/master/demo/details.timeline.gitxplore.png)
