@@ -14,13 +14,13 @@ case class Readme(content: String)
 
 object Readme {
 
-  def get(repofullname: String): Future[Readme] = {
+  def get(repofullname: String): Future[Option[Readme]] = {
     WS.url(GithubAPI.readme.format(repofullname))
     .withHeaders("Accept" -> "application/vnd.github.v3.html+json")
     .get().map(
       r => r.status match {
-        case 200 => Readme(r.body)
-        case e => sys.error(s"Bad response. Status $e")
+        case 200 => Some(Readme(r.body))
+        case e => None
       }
     )
   }

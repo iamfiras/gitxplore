@@ -2,6 +2,7 @@ package controllers
 
 import play.api._
 import play.api.mvc._
+import play.api.http.Status._
 import play.api.templates._
 
 import scala.concurrent._
@@ -26,7 +27,10 @@ object Details extends Controller {
       historyHtml <- PageHelper.getHtmlFrom(historySimpleResult)
       timelineHtml <- PageHelper.getHtmlFrom(timelineSimpleResult)
     } yield {
-      Ok(views.html.details.index(repofullname, readmeHtml, historyHtml, timelineHtml))
+      readmeSimpleResult.header.status match {
+        case OK => Ok(views.html.details.index(repofullname, Some(readmeHtml), historyHtml, timelineHtml))
+        case _ => Ok(views.html.details.index(repofullname, None, historyHtml, timelineHtml))
+      }
     }
   }
 
@@ -45,9 +49,12 @@ object Details extends Controller {
 
   def getReadme(repofullname: String) = Action.async {
     for {
-      readme <- Readme.get(repofullname)
+      readmeOption <- Readme.get(repofullname)
     } yield {
-        Ok(Html(readme.content))
+      readmeOption match {
+        case Some(readme) => Ok(Html(readme.content))
+        case None => NotFound("The repo " + repofullname + " does not have a Readme file.")
+      }
     }
   }
 }

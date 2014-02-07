@@ -1,14 +1,20 @@
-@(repofullname: String, readme: Html = Html(""), history: Html = Html(""), timeline: Html = Html(""))
+@(repofullname: String, readme: Option[Html], history: Html, timeline: Html)
 
 @content = {
   <h5 id="reponame">@repofullname</h5>
   <div id="repoinfos" class="ink-tabs top">
     <ul class="tabs-nav">
-      <li><a href="#readmeTab">Readme</a></li>
+      @readme match {
+        case Some(readmeMD) => { <li><a href="#readmeTab">Readme</a></li> }
+        case None => {}
+      }
       <li><a href="#contributionsTab">Contributions</a></li>
       <li><a href="#timelineTab">Timeline</a></li>
     </ul>
-    <div id="readmeTab" class="tabs-content">@readme</div>
+    @readme match {
+      case Some(readmeMD) => { <div id="readmeTab" class="tabs-content">@readmeMD</div> }
+      case None => {}
+    }
     <div id="contributionsTab" class="tabs-content">@history</div>
     <div id="timelineTab" class="tabs-content"><div id="timeline"></div></div>
   </div>
