@@ -19,8 +19,8 @@ object DetailsMock extends Controller {
     for {
       commits <- CommitMock.get(reponame, 100)
 
-      historySimpleResult <- getHistoryList(commits)(request)
-      timelineSimpleResult <- getTimeline(commits)(request)
+      historySimpleResult <- Details.getHistoryList(commits)(request)
+      timelineSimpleResult <- Details.getTimeline(commits)(request)
 
       historyHtml <- PageHelper.getHtml(historySimpleResult)
       timelineHtml <- PageHelper.getHtml(timelineSimpleResult)
@@ -37,25 +37,12 @@ object DetailsMock extends Controller {
 	}
 
 	def buildHtmlStream(commits: Seq[Commit], request: Request[AnyContent]): HtmlStream = {
-		val historyHtmlFuture = getHistoryList(commits)(request).flatMap(simpleResult => PageHelper.getHtml(simpleResult))
-		val timelineHtmlFuture = getTimeline(commits)(request).flatMap(simpleResult => PageHelper.getHtml(simpleResult))
+		val historyHtmlFuture = Details.getHistoryList(commits)(request).flatMap(simpleResult => PageHelper.getHtml(simpleResult))
+		val timelineHtmlFuture = Details.getTimeline(commits)(request).flatMap(simpleResult => PageHelper.getHtml(simpleResult))
 		
 		val historyStream = PageHelper.renderStream(historyHtmlFuture, "contributionsTab")
 		val timelineStream = PageHelper.renderStream(timelineHtmlFuture, "timelineScript")
 		
 		HtmlStream.interleave(historyStream, timelineStream)
 	}
-
-  def getTimeline(commits: Seq[Commit]) = Action {
-    Ok(views.html.details.timeline(commits))
-  }
-
-  def getHistoryList(commits: Seq[Commit]) = Action.async {
-    val label = "%s (%2.2f%%, %d commits)"
-    val grouped = commits groupBy { commit => commit.committer }
-    val history = grouped map { commitList =>
-      (label.format(commitList._1, (commitList._2.length.toDouble / commits.length.toDouble) * 100, commitList._2.length), commitList._2)
-    }
-	  Promise.timeout(Ok(views.html.details.historyList(history.toList.sortBy(- _._2.length))), 1000)
-  }
 }
