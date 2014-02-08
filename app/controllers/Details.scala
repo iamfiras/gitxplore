@@ -2,6 +2,8 @@ package controllers
 
 import play.api._
 import play.api.mvc._
+import play.api.http.Status._
+import play.api.templates._
 
 import scala.concurrent._
 import ExecutionContext.Implicits.global
@@ -12,18 +14,23 @@ import utils.PageHelper
 
 object Details extends Controller {
 
-  def index(repo: String, name: String) = Action.async { request =>
-    val reponame = repo + "/" + name
+  def index(owner: String, repo: String) = Action.async { request =>
+    val repofullname = owner + "/" + repo
     for {
-      commits <- Commit.get(reponame, 100)
-      
+      commits <- Commit.get(repofullname, 100)
+
+      readmeSimpleResult <- getReadme(repofullname)(request)
       historySimpleResult <- getHistoryList(commits)(request)
       timelineSimpleResult <- getTimeline(commits)(request)
-      
+
+      readmeHtml <- PageHelper.getHtml(readmeSimpleResult)
       historyHtml <- PageHelper.getHtml(historySimpleResult)
       timelineHtml <- PageHelper.getHtml(timelineSimpleResult)
     } yield {
-      Ok(views.html.details.index(reponame, historyHtml, timelineHtml))
+      readmeSimpleResult.header.status match {
+        case OK => Ok(views.html.details.index(repofullname, Some(readmeHtml), historyHtml, timelineHtml))
+        case _ => Ok(views.html.details.index(repofullname, None, historyHtml, timelineHtml))
+      }
     }
   }
 
@@ -38,5 +45,16 @@ object Details extends Controller {
       (label.format(commitList._1, (commitList._2.length.toDouble / commits.length.toDouble) * 100, commitList._2.length), commitList._2)
     }
     Ok(views.html.details.historyList(history.toList.sortBy(- _._2.length)))
+  }
+
+  def getReadme(repofullname: String) = Action.async {
+    for {
+      readmeOption <- Readme.get(repofullname)
+    } yield {
+      readmeOption match {
+        case Some(readme) => Ok(Html(readme.content))
+        case None => NotFound("The repo " + repofullname + " does not have a Readme file.")
+      }
+    }
   }
 }

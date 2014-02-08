@@ -23,7 +23,7 @@ object Repository {
       )
     ).map(
       _.collect {
-        case (fullname, stars) => Repository(fullname, stars)
+        case (full_name, stargazers_count) => Repository(full_name, stargazers_count)
       }
     )
   }

@@ -25,7 +25,7 @@ object DetailsMock extends Controller {
       historyHtml <- PageHelper.getHtml(historySimpleResult)
       timelineHtml <- PageHelper.getHtml(timelineSimpleResult)
     } yield {
-      Ok(views.html.details.index(reponame, historyHtml, timelineHtml))
+      Ok(views.html.details.index(reponame, None, historyHtml, timelineHtml))
     }
   }
 

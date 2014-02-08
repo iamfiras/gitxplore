@@ -7,7 +7,7 @@ GET     /                           controllers.Search.index
 GET     /results                    controllers.Search.results(q: Option[String] ?= None)
 GET     /search                     controllers.Search.search(q: Option[String] ?= None)
 
-GET     /details/:repo/:name        controllers.Details.index(repo, name)
+GET     /details/:owner/:repo       controllers.Details.index(owner, repo)
 
 GET     /mocks/details/:repo/:name  mocks.DetailsMock.index(repo, name)
 GET     /mocks/stream/:repo/:name   mocks.DetailsMock.stream(repo, name)
