@@ -1,14 +1,14 @@
 # git[x]plore
 
-In the repository details page we have two modules : **Contributions** which is a tree of the last 100 commits and **Timeline** which is a representation of these 100 commits on a timeline.
+In the repository details page we have three modules : **Readme** which displays the readme file if exists, **Contributions** which is a tree of the last 100 commits, and **Timeline** which is a representation of these 100 commits on a timeline.
+
+The **Readme** module calls a github service once, the **Contributions** and **Timeline** modules call together the same github service once. So we have in total two github service calls.
 
 In this branch I implemented this "details" service in a way that it will start loading the page and these modules as soon as one of them is ready, so it will not wait until all the data is ready to start sending it to the client.
 
 It's basically an implementation of Yevgeniy Brikman [@brikis98](https://twitter.com/brikis98) presentation at ping-conf 2014 [Building composable, streaming, testable Play apps](http://www.ping-conf.com/#yevgeniybrikman). Check it out for more details.
 
 ## Screenshots
-
-To simulate a heavy calculation I just created a clone of the ```Details``` controller in ```app/mocks/DetailsMock.scala``` and delayed the response of the Contributions module by one second.
 
 **Initial**: Waiting 1 second until the data is ready and starts streaming to the client, then the browser build the Dom, then it starts downloading requested files (css, js, fonts), and finally rendering the page.
 
