@@ -7,10 +7,8 @@ GET     /                           controllers.Search.index
 GET     /results                    controllers.Search.results(q: Option[String] ?= None)
 GET     /search                     controllers.Search.search(q: Option[String] ?= None)
 
-GET     /details/:owner/:repo       controllers.Details.index(owner, repo)
-
-GET     /mocks/details/:repo/:name  mocks.DetailsMock.index(repo, name)
-GET     /mocks/stream/:repo/:name   mocks.DetailsMock.stream(repo, name)
+GET     /details/:owner/:repo       controllers.Aggregate.index(owner, repo)
+GET     /stream/:owner/:repo        controllers.AggregateStream.index(owner, repo)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

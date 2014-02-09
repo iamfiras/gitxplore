@@ -33,7 +33,7 @@ object Commit {
     )
   }
 
-  def get(repofullname: String, limit: Int): Future[Seq[Commit]] = {
+  def get(repofullname: String, limit: Int = 100): Future[Seq[Commit]] = {
     WS.url(GithubAPI.commits.format(repofullname, limit))
     .get().map(
       r => r.status match {
