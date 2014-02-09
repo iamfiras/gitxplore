@@ -6,7 +6,6 @@ import scala.concurrent._
 import ExecutionContext.Implicits.global
 
 import models.Repository
-import mocks.RepositoryMock
 import utils.{Messages, PageHelper}
 
 object Search extends Controller {
